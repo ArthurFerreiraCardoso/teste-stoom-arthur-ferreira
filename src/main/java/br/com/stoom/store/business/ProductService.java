@@ -39,20 +39,28 @@ public class ProductService implements IProductBO {
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
-        return productRepository.findById(id);
+    public ProductDTOResponse findById(Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            return productMapper.toProductDTO(product);
+        } else {
+            throw new NotFoundException("Product not found with ID: " + id);
+        }
     }
+
 
     @Override
     public List<ProductDTOResponse> findByBrand(String brand) {
-        return productMapper.listToProductDTOResponseList(productRepository.findByBrand(brand));
+        return productMapper.listToProductDTOResponseList(productRepository.findByBrandName(brand));
     }
 
     @Override
     public List<ProductDTOResponse> findByCategory(String category) {
-        return productMapper.listToProductDTOResponseList(productRepository.findByCategory(category));
+        return productMapper.listToProductDTOResponseList(productRepository.findByCategoryDescription(category));
     }
 
+    @Override
     public Product saveProduct(ProductDTORequest productDTORequest) {
         Product product = productMapper.toProduct(productDTORequest);
 
@@ -63,36 +71,27 @@ public class ProductService implements IProductBO {
 
     }
 
-//    private Category validateCategory(Long categoryId) {
-//        Category category = new Category();
-//        if (Objects.isNull(categoryId) || category.getId() == 0) {
-//            return categoryRepo.save(category);
-//
-//        }
-//    }
-
-    private Brand validateBrand(Long brandId) {
+    @Override
+    public Brand validateBrand(Long brandId) {
         Brand brand = new Brand();
         try {
             if (Objects.isNull(brandId) || brandId == 0) {
                 return brandRepo.save(brand);
             } else {
-                // Lógica para obter o Brand com base no brandId, por exemplo:
                 Optional<Brand> optionalBrand = brandRepo.findById(brandId);
                 if (optionalBrand.isPresent()) {
                     return optionalBrand.get();
                 } else {
-                    // Se não encontrar o Brand com o brandId, pode lançar uma exceção ou lidar de outra forma
-                    throw new javassist.NotFoundException("Brand not found with id: " + brandId);
+                    throw new NotFoundException("Brand not found with id: " + brandId);
                 }
             }
         } catch (Exception e) {
-            // Trate a exceção adequadamente, por exemplo, registrando-a ou lançando-a novamente
             throw new NotFoundException("Error validating brand: " + e.getMessage(), e);
         }
     }
 
-    private Category validateCategory(Long categoryId) {
+    @Override
+    public Category validateCategory(Long categoryId) {
         Category category = new Category();
         try {
             if (Objects.isNull(categoryId) || categoryId == 0) {
@@ -102,7 +101,7 @@ public class ProductService implements IProductBO {
                 if (optionalCategory.isPresent()) {
                     return optionalCategory.get();
                 } else {
-                    throw new javassist.NotFoundException("Brand not found with id: " + categoryId);
+                    throw new NotFoundException("Brand not found with id: " + categoryId);
                 }
             }
         } catch (Exception e) {
@@ -110,24 +109,10 @@ public class ProductService implements IProductBO {
         }
     }
 
-//
-//    private Brand validateBrand(Long brandId) {
-//        Brand brand = new Brand();
-//        try {
-//            if (Objects.isNull(brandId) || brand.getId() == 0) {
-//                return brandRepo.save(brand);
-//            }
-//        } catch (Exception e) {
-//
-//        }
-//        return brand;
-//    }
-
-
     @Override
-    public Product updateProduct(Long id, ProductDTORequest productDTORequest) throws javassist.NotFoundException {
+    public Product updateProduct(Long id, ProductDTORequest productDTORequest) throws NotFoundException {
         Product updatedProduct = productRepository.findById(id)
-                .orElseThrow(() -> new javassist.NotFoundException("Product not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with ID: " + id));
 
         Product productUpdate = productMapper.toProduct(productDTORequest);
 
@@ -142,25 +127,25 @@ public class ProductService implements IProductBO {
     }
 
     @Override
-    public void delete(Long id) throws javassist.NotFoundException {
+    public void delete(Long id) throws NotFoundException {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new javassist.NotFoundException("Product not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with ID: " + id));
         productRepository.delete(product);
     }
 
 
     @Override
-    public Product enableProduct(Long id) throws javassist.NotFoundException {
+    public Product enableProduct(Long id) throws NotFoundException {
         Product productActual = productRepository.findById(id)
-                .orElseThrow(() -> new javassist.NotFoundException("Product not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with ID: " + id));
         productActual.setActive(true);
         return productRepository.save(productActual);
     }
 
     @Override
-    public Product disableProduct(Long id) throws javassist.NotFoundException {
+    public Product disableProduct(Long id) throws NotFoundException {
         Product productActual = productRepository.findById(id)
-                .orElseThrow(() -> new javassist.NotFoundException("Product not found with ID: " + id));
+                .orElseThrow(() -> new NotFoundException("Product not found with ID: " + id));
         productActual.setActive(false);
         return productRepository.save(productActual);
     }

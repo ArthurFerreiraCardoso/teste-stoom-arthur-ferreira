@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -17,18 +18,23 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductDTOResponse {
 
+    @NotEmpty
     @JsonProperty("id")
     private Long id;
 
+    @NotEmpty
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("categories")
-    private List<Category> categories;
+    @NotEmpty
+    @JsonProperty("categoryId")
+    private Long categoryId;
 
-    @JsonProperty("brand")
-    private Brand brand;
+    @NotEmpty
+    @JsonProperty("brandId")
+    private Long brandId;
 
+    @NotEmpty
     @JsonProperty("price")
     private BigDecimal price;
 }

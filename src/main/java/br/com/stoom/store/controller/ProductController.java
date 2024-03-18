@@ -25,39 +25,37 @@ public class ProductController {
     @GetMapping(value = "/list-all-products", produces = "application/json")
     public ResponseEntity<List<ProductDTOResponse>> findAll() {
         List<ProductDTOResponse> productList = productService.findAll();
-        if (productList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
-        }
-
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
-    @GetMapping(value = "/search-for-products-by-id/{id}", produces = "application/json")
-    public ResponseEntity<Optional<Product>> findById(@PathVariable Long id) {
-        Optional<Product> productDTO = productService.findById(id);
 
-        if (Objects.isNull(productDTO)) {
+    @GetMapping(value = "/search-for-products-by-id/{id}", produces = "application/json")
+    public ResponseEntity<ProductDTOResponse> findById(@PathVariable Long id) {
+        ProductDTOResponse productDTO = productService.findById(id);
+
+        if (productDTO != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(productDTO);
+        } else {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
-
-        return ResponseEntity.status(HttpStatus.OK).body(productDTO);
     }
 
-    @GetMapping(value = "/search-for-brand-by-id/{brand}", produces = "application/json")
+
+    @GetMapping(value = "/search-products-by-brand/{brand}", produces = "application/json")
     public ResponseEntity<List<ProductDTOResponse>> findByBrand(@PathVariable String brand) {
         List<ProductDTOResponse> productList = productService.findByBrand(brand);
 
-        if (Objects.isNull(productList) || productList.isEmpty()) {
+        if (productList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
-    @GetMapping(value = "/search-for-category-by-id/{category}", produces = "application/json")
+    @GetMapping(value = "/search-products-by-category/{category}", produces = "application/json")
     public ResponseEntity<List<ProductDTOResponse>> findByCategory(@PathVariable String category) {
         List<ProductDTOResponse> productList = productService.findByCategory(category);
 
-        if (Objects.isNull(productList) || productList.isEmpty()) {
+        if (productList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
         }
         return ResponseEntity.status(HttpStatus.OK).body(productList);
@@ -97,6 +95,5 @@ public class ProductController {
         productService.disableProduct(id);
         return new ResponseEntity<>("Product disabled successfully", HttpStatus.OK);
     }
-
-
 }
+

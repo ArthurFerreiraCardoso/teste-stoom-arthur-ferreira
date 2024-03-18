@@ -22,7 +22,7 @@ public class Brand {
     @Column(name = "active", columnDefinition = "boolean default true")
     private Boolean active = true;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "brand")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "brand")
     private List<Product> products;
 
 }
