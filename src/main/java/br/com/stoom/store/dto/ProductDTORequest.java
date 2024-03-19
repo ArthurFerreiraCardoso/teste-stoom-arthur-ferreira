@@ -33,5 +33,4 @@ public class ProductDTORequest {
     @NotEmpty
     @JsonProperty("active")
     private Boolean active;
-
 }

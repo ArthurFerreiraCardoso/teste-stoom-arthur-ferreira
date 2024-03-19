@@ -16,9 +16,8 @@ public interface ProductMapper {
     List<ProductDTOResponse> listToProductDTOResponseList(List<Product> productList);
 
     @Mapping(source = "brandId", target = "brand.id")
-    @Mapping(source = "categoryId", target = "category.id" )
+    @Mapping(source = "categoryId", target = "category.id")
     Product toProduct(ProductDTORequest productDTORequest);
-
 
 }
 

@@ -3,7 +3,6 @@ package br.com.stoom.store.controller;
 import br.com.stoom.store.business.ProductService;
 import br.com.stoom.store.dto.ProductDTORequest;
 import br.com.stoom.store.dto.ProductDTOResponse;
-import br.com.stoom.store.model.Product;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 
 @RestController
@@ -79,7 +76,7 @@ public class ProductController {
 
 
     @DeleteMapping(value = "/delete-product/{id}")
-    public ResponseEntity<ProductDTOResponse> delete(@PathVariable Long id) throws NotFoundException {
+    public ResponseEntity<?> delete(@PathVariable Long id) throws NotFoundException {
         productService.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }

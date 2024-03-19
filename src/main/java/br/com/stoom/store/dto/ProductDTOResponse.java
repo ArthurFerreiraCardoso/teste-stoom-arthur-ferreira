@@ -1,7 +1,5 @@
 package br.com.stoom.store.dto;
 
-import br.com.stoom.store.model.Brand;
-import br.com.stoom.store.model.Category;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @Builder

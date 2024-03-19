@@ -133,7 +133,6 @@ public class ProductService implements IProductBO {
         productRepository.delete(product);
     }
 
-
     @Override
     public Product enableProduct(Long id) throws NotFoundException {
         Product productActual = productRepository.findById(id)

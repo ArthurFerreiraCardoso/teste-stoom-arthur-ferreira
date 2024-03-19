@@ -6,10 +6,8 @@ import br.com.stoom.store.model.Brand;
 import br.com.stoom.store.model.Category;
 import br.com.stoom.store.model.Product;
 import javassist.NotFoundException;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface IProductBO {
 

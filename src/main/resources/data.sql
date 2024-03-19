@@ -1,12 +1,11 @@
--- Inserir dados na tabela category
 INSERT INTO category (description, active) VALUES
-    ('Eletrônicos', true),
-    ('Roupas', true),
-    ('Alimentos', true);
+    ('biscoito', 1),
+    ('bebida', 1),
+    ('grao', 1),
+    ('massa', 1);
 
--- Inserir dados na tabela brand
 INSERT INTO brand (name, active) VALUES
-    ('Sony', true),
-    ('Samsung', true),
-    ('Nike', true),
-    ('Adidas', true);
+    ('nestle', 1),
+    ('cafe brasileiro', 1),
+    ('camil', 1),
+    ('adria', 1);
