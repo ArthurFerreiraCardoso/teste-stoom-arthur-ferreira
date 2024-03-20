@@ -49,7 +49,6 @@ public class BrandService implements IBrandBO {
         Brand validatedBrand = this.validateBrand(brand);
 
         return validatedBrand;
-
     }
 
     @Override

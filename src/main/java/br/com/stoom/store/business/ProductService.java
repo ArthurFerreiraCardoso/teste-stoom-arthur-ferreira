@@ -68,7 +68,6 @@ public class ProductService implements IProductBO {
         product.setCategory(this.validateCategory(productDTORequest.getCategoryId()));
 
         return productRepository.save(product);
-
     }
 
     @Override
@@ -123,7 +122,6 @@ public class ProductService implements IProductBO {
         updatedProduct.setPrice(productUpdate.getPrice());
         updatedProduct.setBrand(productUpdate.getBrand());
         return productRepository.save(updatedProduct);
-
     }
 
     @Override
